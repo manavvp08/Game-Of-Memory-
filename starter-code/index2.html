@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon-32x32.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Frontend Mentor | Memory game</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body class="font-atkinson font-700">
+    <div class="">
+      <!-- Game setup start -->
+      <section
+        class="bg-dark-navy-blue min-h-screen flex items-center justify-center hidden setup__section"
+      >
+        <section class="max-w-6xl setup__container">
+          <h1
+            class="text-light-grey text-4rem text-center pb-32 primary__heading"
+          >
+            memory
+          </h1>
+          <div class="bg-white p-20 flex flex-col gap-12 rounded-2.6rem">
+            <div class="flex flex-col gap-6">
+              <h2 class="text-muted-blue-grey text-2rem">Select Theme</h2>
+              <div class="grid grid-cols-2 gap-12 text-center">
+                <p
+                  class="text-2.6rem text-light-grey py-3 px-28 bg-dark-blue rounded-2.6rem cursor-pointer"
+                >
+                  Numbers
+                </p>
+                <p
+                  class="text-2.6rem text-light-grey py-3 px-28 bg-blue-grey rounded-2.6rem cursor-pointer transition-all duration-300 hover:bg-medium-blue"
+                >
+                  Icons
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-col gap-6">
+              <h2 class="text-muted-blue-grey text-2rem">Number of Players</h2>
+              <div class="grid grid-cols-4 gap-8 text-center">
+                <p
+                  class="text-2.6rem text-light-grey py-3 px-16 bg-dark-blue rounded-2.6rem cursor-pointer"
+                >
+                  1
+                </p>
+                <p
+                  class="text-2.6rem text-light-grey py-3 px-16 bg-blue-grey rounded-2.6rem cursor-pointer transition-all duration-300 hover:bg-medium-blue"
+                >
+                  2
+                </p>
+                <p
+                  class="text-2.6rem text-light-grey py-3 px-16 bg-blue-grey rounded-2.6rem cursor-pointer transition-all duration-300 hover:bg-medium-blue"
+                >
+                  3
+                </p>
+                <p
+                  class="text-2.6rem text-light-grey py-3 px-16 bg-blue-grey rounded-2.6rem cursor-pointer transition-all duration-300 hover:bg-medium-blue"
+                >
+                  4
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-col gap-6">
+              <h2 class="text-muted-blue-grey text-2rem">Grid Size</h2>
+              <div class="grid grid-cols-2 gap-12 text-center">
+                <p
+                  class="text-2.6rem text-light-grey py-3 px-28 bg-dark-blue rounded-2.6rem cursor-pointer"
+                >
+                  4x4
+                </p>
+                <p
+                  class="text-2.6rem text-light-grey py-3 px-28 bg-blue-grey rounded-2.6rem cursor-pointer transition-all duration-300 hover:bg-medium-blue"
+                >
+                  6x6
+                </p>
+              </div>
+            </div>
+            <button
+              class="text-light-grey text-3.2rem bg-yellow py-3 px-28 rounded-3.5rem transition-all duration-300 hover:bg-light-yellow"
+            >
+              Start Game
+            </button>
+          </div>
+        </section>
+      </section>
+      <!-- Game setup end -->
+
+      <!-- Game board start -->
+      <section class="bg-light-grey">
+        <section class="max-w-144rem mx-auto p-24 flex flex-col gap-44">
+          <div class="flex items-center justify-between">
+            <img src="assets/logo.svg" alt="memory logo" />
+            <div class="flex items-center gap-6">
+              <button
+                class="text-2rem text-light-grey py-2 px-12 bg-yellow rounded-2.6rem"
+              >
+                Restart
+              </button>
+              <button
+                class="text-2rem text-dark-blue py-2 px-12 bg-blue-grey rounded-2.6rem"
+              >
+                New Game
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-4 gap-8 w-54rem mx-auto">
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div
+              class="h-11.8rem w-11.8rem rounded-full bg-dark-blue relative before:content-['3'] before:absolute before:top"
+            ></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+            <div class="h-11.8rem w-11.8rem rounded-full bg-dark-blue"></div>
+          </div>
+          <!-- Multiplayer scores start -->
+          <div class="grid grid-cols-4 gap-12 w-full">
+            <div class="flex flex-col gap-9">
+              <div
+                class="flex items-center justify-between bg-yellow p-6 rounded-3xl relative before:content-[''] before:absolute before:w-16 before:h-16 before:bg-yellow before:rotate-45 before:-top-5 before:left-1/2 before:-translate-x-1/2"
+              >
+                <p class="text-light-grey text-1.8rem">Player 1</p>
+                <span class="text-light-grey text-3.2rem">0</span>
+              </div>
+              <p
+                class="text-dark-navy-blue text-center text-1.3rem tracking-[0.5rem] uppercase"
+              >
+                Current Turn
+              </p>
+            </div>
+            <div class="flex flex-col gap-9">
+              <div
+                class="flex items-center justify-between bg-blue-grey p-6 rounded-3xl relative"
+              >
+                <p class="text-muted-blue-grey text-1.8rem">Player 2</p>
+                <span class="text-dark-blue text-3.2rem">0</span>
+              </div>
+              <p
+                class="text-dark-navy-blue text-center text-1.3rem tracking-[0.5rem] uppercase"
+              >
+                Current Turn
+              </p>
+            </div>
+            <div class="flex flex-col gap-9">
+              <div
+                class="flex items-center justify-between bg-blue-grey p-6 rounded-3xl relative"
+              >
+                <p class="text-muted-blue-grey text-1.8rem">Player 3</p>
+                <span class="text-dark-blue text-3.2rem">0</span>
+              </div>
+              <p
+                class="text-dark-navy-blue text-center text-1.3rem tracking-[0.5rem] uppercase"
+              >
+                Current Turn
+              </p>
+            </div>
+            <div class="flex flex-col gap-9">
+              <div
+                class="flex items-center justify-between bg-blue-grey p-6 rounded-3xl relative"
+              >
+                <p class="text-muted-blue-grey text-1.8rem">Player 4</p>
+                <span class="text-dark-blue text-3.2rem">0</span>
+              </div>
+              <p
+                class="text-dark-navy-blue text-center text-1.3rem tracking-[0.5rem] uppercase"
+              >
+                Current Turn
+              </p>
+            </div>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <!-- P1 score -->
+    Player 2
+    <!-- P2 score -->
+    Current Turn Player 3
+    <!-- P3 score -->
+    Current Turn Player 4
+    <!-- P4 score -->
+    Current Turn
+
+    <!-- Multiplayer scores start -->
+
+    <!-- Solo game time and moves counter start -->
+
+    Time
+    <!-- Time elapsed -->
+
+    Moves
+    <!-- Moves total -->
+
+    <!-- Solo game time and moves counter end -->
+
+    <!-- Game board end -->
+  </body>
+</html>

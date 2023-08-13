@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon-32x32.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Frontend Mentor | Memory game</title>
+    <link rel="stylesheet" href="css/stylee.css" />
+    <link rel="stylesheet" href="css/utilities.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body class="font-atkinson font-700">
+    <div class="">
+      <!-- Game setup start -->
+      <section class="setup__section">
+        <section class="setup__container">
+          <h1 class="primary__heading">memory</h1>
+          <div class="setup__game__settings">
+            <div class="select__box">
+              <h2 class="text-muted-blue-grey text-2rem select__heading">
+                Select Theme
+              </h2>
+              <div class="select__theme__box">
+                <p
+                  class="themes themes__active theme__number"
+                  data-theme="numbers"
+                >
+                  Numbers
+                </p>
+                <p class="themes theme__icon hover" data-theme="icons">Icons</p>
+              </div>
+            </div>
+            <div class="select__box">
+              <h2 class="select__heading">Number of Players</h2>
+              <div class="select__player__box">
+                <p class="players players__active" data-players="1">1</p>
+                <p class="players hover" data-players="2">2</p>
+                <p class="players hover" data-players="3">3</p>
+                <p class="players hover" data-players="4">4</p>
+              </div>
+            </div>
+            <div class="select__box">
+              <h2 class="select__heading">Grid Size</h2>
+              <div class="select__grid__box">
+                <p class="grids grids__4x4 grids__active" data-grid-size="4x4">
+                  4x4
+                </p>
+
+                <p class="grids grids__6x6 hover" data-grid-size="6x6">6x6</p>
+              </div>
+            </div>
+            <button class="start__game">Start Game</button>
+          </div>
+        </section>
+      </section>
+      <!-- Game setup end -->
+
+      <!-- Game board start -->
+      <section class="game__board__section none">
+        <section class="game__board__container">
+          <div class="game__board__heading">
+            <img src="assets/logo.svg" alt="memory logo" />
+            <div class="decision__box">
+              <button class="restart">Restart</button>
+              <button class="new__game">New Game</button>
+            </div>
+          </div>
+          <div class="game__board game__board__4x4 numbers">
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+            <div class="game-circle">
+              <div class="circle-content"></div>
+            </div>
+          </div>
+          <div>
+            <!-- Multiplayer scores start -->
+            <div class="players__board" id="playersBoard">
+              <div class="multi__score__board none" data-players="2">
+                <div class="players__box">
+                  <div class="player__box player__box__active">
+                    <p class="multi__players multi__players__active">
+                      Player 1
+                    </p>
+                    <span class="players__scores players__scores__active"
+                      >0</span
+                    >
+                  </div>
+                  <p class="players__turn">Current Turn</p>
+                </div>
+                <div class="players__box">
+                  <div class="player__box">
+                    <p class="multi__players">Player 2</p>
+                    <span class="players__scores">0</span>
+                  </div>
+                  <p class="players__turn hidden">Current Turn</p>
+                </div>
+                <div class="players__box">
+                  <div class="player__box">
+                    <p class="multi__players">Player 3</p>
+                    <span class="players__scores">0</span>
+                  </div>
+                  <p class="players__turn hidden">Current Turn</p>
+                </div>
+                <div class="players__box">
+                  <div class="player__box">
+                    <p class="multi__players">Player 4</p>
+                    <span class="players__scores">0</span>
+                  </div>
+                  <p class="players__turn hidden">Current Turn</p>
+                </div>
+              </div>
+
+              <!-- Solo game time and moves counter start -->
+              <div class="solo__score__board" data-players="1">
+                <div class="solo__box">
+                  <div class="player__box">
+                    <p class="multi__players">Time</p>
+                    <span class="player__time">0:00</span>
+                  </div>
+                </div>
+                <div class="solo__box">
+                  <div class="player__box">
+                    <p class="multi__players">Moves</p>
+                    <span class="player__move">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Moves total -->
+        <section class="winner__container none">
+          <section class="winner__section">
+            <h3 class="winner__text">Player 3 wins!</h3>
+            <p class="winner__message">Game over! Here are the results…</p>
+            <div class="winners__box">
+              <div class="winner__box winner__box__active">
+                <p class="winner__player">Player 3 <span>(Winner!)</span></p>
+                <p class="winner__moves">8 Pairs</p>
+              </div>
+              <div class="winner__box">
+                <p class="winner__player">
+                  Player 1 <span class="none">(Winner!)</span>
+                </p>
+                <p class="winner__moves">8 Pairs</p>
+              </div>
+              <div class="winner__box">
+                <p class="winner__player">
+                  Player 2 <span class="none">(Winner!)</span>
+                </p>
+                <p class="winner__moves">8 Pairs</p>
+              </div>
+              <div class="winner__box">
+                <p class="winner__player">
+                  Player 4 <span class="none">(Winner!)</span>
+                </p>
+                <p class="winner__moves">8 Pairs</p>
+              </div>
+            </div>
+            <div class="decision__box">
+              <button class="winner__restart">Restart</button>
+              <button class="winner__new__game">Setup New Game</button>
+            </div>
+          </section>
+        </section>
+
+        <!-- Solo game time and moves counter end -->
+        <section class="solo__winner__container none">
+          <section class="solo__winner__section">
+            <h3 class="winner__text">You did it!</h3>
+            <p class="winner__message">Game over! Here’s how you got on…</p>
+            <div class="winners__box">
+              <div class="winner__box">
+                <p class="winner__player">Time Elapsed</p>
+                <p class="solo__winner__time">1:53</p>
+              </div>
+              <div class="winner__box">
+                <p class="winner__player">Moves Taken</p>
+                <p class="solo__winner__moves">39 Moves</p>
+              </div>
+            </div>
+            <div class="decision__box">
+              <button class="winner__restart">Restart</button>
+              <button class="winner__new__game">Setup New Game</button>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <div class="overlay none"></div>
+    </div>
+
+    <!-- Multiplayer scores start -->
+
+    <!-- Time -->
+    <!-- Time elapsed -->
+
+    <!-- Moves -->
+
+    <!-- Game board end -->
+  </body>
+</html>

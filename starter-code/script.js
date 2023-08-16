@@ -20,6 +20,10 @@ const soloWinnerContainer = document.querySelector(".solo__winner__container");
 const overlay = document.querySelector(".overlay");
 const soloWinnerTime = document.querySelector(".solo__winner__time");
 const soloWinnerMove = document.querySelector(".solo__winner__moves");
+const restartButton = document.querySelector(".restart");
+const restartBtn = document.querySelectorAll(".winner__restart");
+const newGameButton = document.querySelector(".new__game");
+const newGameBtn = document.querySelector(".winner__new__game");
 
 let activePlayerIndex = 0;
 // const chooseGameType = function (e) {
@@ -214,7 +218,7 @@ let playerMoves = 0;
 let revealedCircles = [];
 
 const startGame = function (e) {
-  e.preventDefault();
+  // e.preventDefault();
   setupSection.classList.add("none");
   gameBoardSection.classList.remove("none");
   startTimer();
@@ -332,12 +336,6 @@ const generateRandomNumbers = function (totalPairs) {
   return numbers;
 };
 
-selectGameTypeEL.addEventListener("click", chooseGameType);
-selectMode.addEventListener("click", chooseGameTheme);
-selectPlayers.addEventListener("click", choosePlayers);
-beginGameEl.addEventListener("click", startGame);
-updateGameBoard(4, 4);
-
 // After the game is over, call this function to display the results
 const displayMultiResults = function (circles) {
   if (document.querySelectorAll(".settled").length === circles.length) {
@@ -353,32 +351,74 @@ const displayMultiResults = function (circles) {
       const playerData = [];
       // console.log(playerBoxes);
       // Gather player data from player boxes
-      playerBoxes.forEach((playerBox) => {
-        console.log(playerBox);
-        const playerName =
-          playerBox.querySelector(".multi__players").textContent;
-        const playerScore = parseInt(
-          playerBox.querySelector(".players__scores").textContent
-        );
-        playerData.push({ name: playerName, score: playerScore });
+
+      allPlayerBoxes.forEach((element, index) => {
+        if (index < selectedPlayerCount) {
+          // element.classList.remove("none");
+          const playerName =
+            element.querySelector(".multi__players").textContent;
+          const playerScore = parseInt(
+            element.querySelector(".players__scores").textContent
+          );
+          console.log(playerName.trim(), playerScore);
+          playerData.push({
+            name: playerName.trim(),
+            score: playerScore,
+            index: index,
+          });
+        }
       });
+      console.log(playerData);
 
       // Sort players by score in descending order
       playerData.sort((a, b) => b.score - a.score);
       console.log(playerData);
+
+      // Get the winning score
+      const winningScore = playerData[0].score;
+      const decisionText =
+        multiplayerWinnerContainer.querySelector(".winner__text");
       // Update "winner__box" elements with sorted player data
       const winnerBoxes = document.querySelectorAll(".winner__box");
+
       winnerBoxes.forEach((winnerBox, index) => {
         const winnerPlayer = winnerBox.querySelector(".winner__player");
         const winnerMoves = winnerBox.querySelector(".winner__moves");
 
         if (index < playerData.length) {
-          const { name, score } = playerData[index];
+          const { name, score, index: playerIndex } = playerData[index];
           winnerPlayer.textContent = `${name} ${
-            index === 0 ? "(Winner!)" : ""
+            index === 0 || (index > 0 && score === winningScore)
+              ? "(Winner!)"
+              : ""
           }`;
           winnerMoves.textContent = `${score} Pairs`;
           winnerBox.classList.remove("none");
+
+          console.log(index, score, winningScore);
+          // if (index === 0 || (index > 0 && score === winningScore)) {
+          //   winnerBox.classList.add("winner__box__active");
+          // } else if (index > 0 && score === winningScore) {
+          //   decisionText.textContent = `It’s a tie!`;
+          // } else {
+          //   winnerBox.classList.remove("winner__box__active");
+          //   decisionText.textContent = `${playerData[0].name} wins!`;
+          // }
+          if (score === winningScore) {
+            winnerBox.classList.add("winner__box__active");
+          } else {
+            winnerBox.classList.remove("winner__box__active");
+          }
+          if (
+            playerData.filter((player) => player.score === winningScore)
+              .length > 1
+          ) {
+            decisionText.textContent = `It’s a tie!`;
+          } else {
+            decisionText.textContent = `${
+              playerData.find((player) => player.score === winningScore).name
+            } wins!`;
+          }
         } else {
           winnerBox.classList.add("none");
         }
@@ -393,3 +433,82 @@ const displayMultiResults = function (circles) {
 
 // Call this function after the game is over to display the results
 // displayMultiResults();
+
+const restartGame = function () {
+  const playerBoxes = document.querySelectorAll(".player__box");
+  const circles = document.querySelectorAll(".game-circle");
+  multiplayerWinnerContainer.classList.add("none");
+  soloWinnerContainer.classList.add("none");
+  overlay.classList.add("none");
+  // selectedPlayerCount = 1
+
+  //   // Reset player scores and moves
+  // playerBoxes.forEach((playerBox) => {
+  //   console.log(playerBox);
+  //   playerBox.querySelector(".players__scores").textContent = "0";
+  // });
+
+  playerBoxes.forEach((element, index) => {
+    if (index < selectedPlayerCount) {
+      // element.classList.remove("none");
+      element.querySelector(".players__scores").textContent = 0;
+    }
+  });
+  playerMove.textContent = 0;
+  playerMoves = 0;
+
+  circles.forEach((circle) => {
+    circle.classList.remove("revealed", "settled");
+  });
+  // Remove "player__box__active" class from all player boxes
+  const currentPlayer = playerBoxes[activePlayerIndex];
+
+  activePlayerIndex = (activePlayerIndex + 1) % selectedPlayerCount;
+  // const nextActivePlayerIndex = (activePlayerIndex + 1) % selectedPlayerCount;
+  const nextPlayer = playerBoxes[activePlayerIndex];
+  if (!nextPlayer) return;
+
+  currentPlayer.classList.remove("player__box__active");
+  console.log(currentPlayer.nextElementSibling);
+  currentPlayer.nextElementSibling.classList.add("hidden");
+  // playerBoxes.forEach((playerBox) => {
+  //   console.log(playerBoxes);
+  //   playerBox.classList.remove("player__box__active");
+  //   // playerBox.nextElementSibling.classList.add("hidden");
+  // });
+
+  // Add "player__box__active" class to the first player box
+  playerBoxes[0].classList.add("player__box__active");
+  playerBoxes[0].nextElementSibling.classList.remove("hidden");
+
+  activePlayerIndex = 0;
+
+  // Generate new numbers for circles
+  const gridSizeClass = Array.from(gameContainer.classList).find((className) =>
+    className.startsWith("game__board__")
+  );
+
+  if (gridSizeClass) {
+    const gridSize = gridSizeClass.replace("game__board__", "");
+    console.log(gridSize);
+    const [rows, cols] = gridSize.split("x").map(Number);
+    console.log(rows, cols);
+    updateGameBoard(rows, cols);
+    startGame();
+  }
+};
+
+const newGame = function () {
+  location.reload();
+};
+
+restartButton.addEventListener("click", restartGame);
+restartBtn.forEach((btn) => btn.addEventListener("click", restartGame));
+newGameButton.addEventListener("click", newGame);
+newGameBtn.forEach((btn) => btn.addEventListener("click", newGame));
+
+selectGameTypeEL.addEventListener("click", chooseGameType);
+selectMode.addEventListener("click", chooseGameTheme);
+selectPlayers.addEventListener("click", choosePlayers);
+beginGameEl.addEventListener("click", startGame);
+updateGameBoard(4, 4);

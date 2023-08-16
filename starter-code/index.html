@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/utilities.css" />
     <script src="script.js" defer></script>
+    <!-- <script src="app.js" defer></script> -->
   </head>
   <body class="font-atkinson font-700">
     <div class="">
@@ -131,117 +132,127 @@
           <div>
             <!-- Multiplayer scores start -->
             <div class="players__board" id="playersBoard">
-              <div class="multi__score__board none" data-players="2">
-                <div class="players__box">
-                  <div class="player__box player__box__active">
-                    <p class="multi__players multi__players__active">
-                      Player 1
+              <div class="multi__container">
+                <div class="multi__score__board none" data-players="2">
+                  <div class="players__box">
+                    <div class="player__box player__box__active">
+                      <p class="multi__players multi__players__active">
+                        Player 1
+                      </p>
+                      <span class="players__scores players__scores__active"
+                        >0</span
+                      >
+                    </div>
+                    <p class="players__turn">Current Turn</p>
+                  </div>
+                  <div class="players__box">
+                    <div class="player__box">
+                      <p class="multi__players">Player 2</p>
+                      <span class="players__scores">0</span>
+                    </div>
+                    <p class="players__turn hidden">Current Turn</p>
+                  </div>
+                  <div class="players__box">
+                    <div class="player__box">
+                      <p class="multi__players">Player 3</p>
+                      <span class="players__scores">0</span>
+                    </div>
+                    <p class="players__turn hidden">Current Turn</p>
+                  </div>
+                  <div class="players__box">
+                    <div class="player__box">
+                      <p class="multi__players">Player 4</p>
+                      <span class="players__scores">0</span>
+                    </div>
+                    <p class="players__turn hidden">Current Turn</p>
+                  </div>
+                </div>
+                <section class="winner__container none">
+                  <section class="winner__section">
+                    <h3 class="winner__text">Player 3 wins!</h3>
+                    <p class="winner__message">
+                      Game over! Here are the results…
                     </p>
-                    <span class="players__scores players__scores__active"
-                      >0</span
-                    >
-                  </div>
-                  <p class="players__turn">Current Turn</p>
-                </div>
-                <div class="players__box">
-                  <div class="player__box">
-                    <p class="multi__players">Player 2</p>
-                    <span class="players__scores">0</span>
-                  </div>
-                  <p class="players__turn hidden">Current Turn</p>
-                </div>
-                <div class="players__box">
-                  <div class="player__box">
-                    <p class="multi__players">Player 3</p>
-                    <span class="players__scores">0</span>
-                  </div>
-                  <p class="players__turn hidden">Current Turn</p>
-                </div>
-                <div class="players__box">
-                  <div class="player__box">
-                    <p class="multi__players">Player 4</p>
-                    <span class="players__scores">0</span>
-                  </div>
-                  <p class="players__turn hidden">Current Turn</p>
-                </div>
+                    <div class="winners__box">
+                      <div class="winner__box winner__box__active">
+                        <p class="winner__player">
+                          Player 3 <span>(Winner!)</span>
+                        </p>
+                        <p class="winner__moves">8 Pairs</p>
+                      </div>
+                      <div class="winner__box">
+                        <p class="winner__player">
+                          Player 1 <span class="none">(Winner!)</span>
+                        </p>
+                        <p class="winner__moves">8 Pairs</p>
+                      </div>
+                      <div class="winner__box">
+                        <p class="winner__player">
+                          Player 2 <span class="none">(Winner!)</span>
+                        </p>
+                        <p class="winner__moves">8 Pairs</p>
+                      </div>
+                      <div class="winner__box">
+                        <p class="winner__player">
+                          Player 4 <span class="none">(Winner!)</span>
+                        </p>
+                        <p class="winner__moves">8 Pairs</p>
+                      </div>
+                    </div>
+                    <div class="decision__box">
+                      <button class="winner__restart">Restart</button>
+                      <button class="winner__new__game">Setup New Game</button>
+                    </div>
+                  </section>
+                </section>
               </div>
 
               <!-- Solo game time and moves counter start -->
-              <div class="solo__score__board" data-players="1">
-                <div class="solo__box">
-                  <div class="player__box">
-                    <p class="multi__players">Time</p>
-                    <span class="player__time">0:00</span>
+              <div class="solo__container">
+                <div class="solo__score__board" data-players="1">
+                  <div class="solo__box">
+                    <div class="player__box">
+                      <p class="multi__players">Time</p>
+                      <span class="player__time">0:00</span>
+                    </div>
+                  </div>
+                  <div class="solo__box">
+                    <div class="player__box">
+                      <p class="multi__players">Moves</p>
+                      <span class="player__move">0</span>
+                    </div>
                   </div>
                 </div>
-                <div class="solo__box">
-                  <div class="player__box">
-                    <p class="multi__players">Moves</p>
-                    <span class="player__move">0</span>
-                  </div>
-                </div>
+                <section class="solo__winner__container none">
+                  <section class="solo__winner__section">
+                    <h3 class="winner__text">You did it!</h3>
+                    <p class="winner__message">
+                      Game over! Here’s how you got on…
+                    </p>
+                    <div class="winners__box">
+                      <div class="winner__box">
+                        <p class="winner__player">Time Elapsed</p>
+                        <p class="solo__winner__time">1:53</p>
+                      </div>
+                      <div class="winner__box">
+                        <p class="winner__player">Moves Taken</p>
+                        <p class="solo__winner__moves">39 Moves</p>
+                      </div>
+                    </div>
+                    <div class="decision__box">
+                      <button class="winner__restart">Restart</button>
+                      <button class="winner__new__game">Setup New Game</button>
+                    </div>
+                  </section>
+                </section>
               </div>
             </div>
           </div>
         </section>
 
         <!-- Moves total -->
-        <section class="winner__container none">
-          <section class="winner__section">
-            <h3 class="winner__text">Player 3 wins!</h3>
-            <p class="winner__message">Game over! Here are the results…</p>
-            <div class="winners__box">
-              <div class="winner__box winner__box__active">
-                <p class="winner__player">Player 3 <span>(Winner!)</span></p>
-                <p class="winner__moves">8 Pairs</p>
-              </div>
-              <div class="winner__box">
-                <p class="winner__player">
-                  Player 1 <span class="none">(Winner!)</span>
-                </p>
-                <p class="winner__moves">8 Pairs</p>
-              </div>
-              <div class="winner__box">
-                <p class="winner__player">
-                  Player 2 <span class="none">(Winner!)</span>
-                </p>
-                <p class="winner__moves">8 Pairs</p>
-              </div>
-              <div class="winner__box">
-                <p class="winner__player">
-                  Player 4 <span class="none">(Winner!)</span>
-                </p>
-                <p class="winner__moves">8 Pairs</p>
-              </div>
-            </div>
-            <div class="decision__box">
-              <button class="winner__restart">Restart</button>
-              <button class="winner__new__game">Setup New Game</button>
-            </div>
-          </section>
-        </section>
 
         <!-- Solo game time and moves counter end -->
-        <section class="solo__winner__container none">
-          <section class="solo__winner__section">
-            <h3 class="winner__text">You did it!</h3>
-            <p class="winner__message">Game over! Here’s how you got on…</p>
-            <div class="winners__box">
-              <div class="winner__box">
-                <p class="winner__player">Time Elapsed</p>
-                <p class="solo__winner__time">1:53</p>
-              </div>
-              <div class="winner__box">
-                <p class="winner__player">Moves Taken</p>
-                <p class="solo__winner__moves">39 Moves</p>
-              </div>
-            </div>
-            <div class="decision__box">
-              <button class="winner__restart">Restart</button>
-              <button class="winner__new__game">Setup New Game</button>
-            </div>
-          </section>
-        </section>
       </section>
 
       <div class="overlay none"></div>

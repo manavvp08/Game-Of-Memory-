@@ -12,9 +12,16 @@ const soloScoreBoard = playersBoard.querySelector(".solo__score__board");
 const multiScoreBoard = playersBoard.querySelector(".multi__score__board");
 const playerTime = soloScoreBoard.querySelector(".player__time");
 const playerMove = soloScoreBoard.querySelector(".player__move");
-
 const beginGameEl = document.querySelector(".start__game");
+const playerBoxes = document.querySelectorAll(".player__box");
+const multiplayerWinnerContainer = document.querySelector(".winner__container");
+const soloWinnerContainer = document.querySelector(".solo__winner__container");
 
+const overlay = document.querySelector(".overlay");
+const soloWinnerTime = document.querySelector(".solo__winner__time");
+const soloWinnerMove = document.querySelector(".solo__winner__moves");
+
+let activePlayerIndex = 0;
 // const chooseGameType = function (e) {
 //   const gridsEl = document.querySelectorAll(".grids");
 //   gridsEl.forEach((e) => {
@@ -39,6 +46,8 @@ const chooseGameTheme = function (e) {
   });
 
   const clickedElement = e.target.closest(".themes");
+
+  if (!clickedElement) return;
   if (clickedElement) {
     clickedElement.classList.add("themes__active");
 
@@ -100,11 +109,14 @@ const choosePlayers = function (e) {
     }
   });
 };
-
+let selectedPlayerCount = 1;
 playerCount.forEach((player) => {
   player.addEventListener("click", function (e) {
-    const selectedPlayerCount = parseInt(player.dataset.players);
+    selectedPlayerCount = parseInt(player.dataset.players);
     const allPlayerElements = playersBoard.querySelectorAll(".players__box");
+
+    console.log(allPlayerElements);
+    console.log(selectedPlayerCount);
     // Show/hide the appropriate score boards based on the selected player count
     if (selectedPlayerCount === 1) {
       soloScoreBoard.classList.remove("none");
@@ -123,6 +135,37 @@ playerCount.forEach((player) => {
     });
   });
 });
+
+const handlePlayerTurn = function () {
+  setTimeout(() => {
+    const currentPlayer = playerBoxes[activePlayerIndex];
+
+    activePlayerIndex = (activePlayerIndex + 1) % selectedPlayerCount;
+    // const nextActivePlayerIndex = (activePlayerIndex + 1) % selectedPlayerCount;
+    const nextPlayer = playerBoxes[activePlayerIndex];
+    if (!nextPlayer) return;
+
+    currentPlayer.classList.remove("player__box__active");
+    console.log(currentPlayer.nextElementSibling);
+    currentPlayer.nextElementSibling.classList.add("hidden");
+    nextPlayer.classList.add("player__box__active");
+    nextPlayer.nextElementSibling.classList.remove("hidden");
+  }, 1000);
+};
+
+const updatePlayerScore = function () {
+  setTimeout(() => {
+    const currentPlayerScore = parseInt(
+      playerBoxes[activePlayerIndex]?.querySelector(".players__scores")
+        .textContent
+    );
+    console.log(currentPlayerScore);
+
+    playerBoxes[activePlayerIndex].querySelector(
+      ".players__scores"
+    ).textContent = currentPlayerScore + 1;
+  }, 950);
+};
 
 const shuffleArray = function (array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -167,77 +210,89 @@ const updateGameBoard = function (rows, cols) {
     gameContainer.appendChild(gameCircle);
   }
 };
+let playerMoves = 0;
+let revealedCircles = [];
 
 const startGame = function (e) {
   e.preventDefault();
   setupSection.classList.add("none");
   gameBoardSection.classList.remove("none");
-  let playerMoves = 0;
   startTimer();
-
+  console.log(selectedPlayerCount);
   const circles = document.querySelectorAll(".game-circle");
-  let revealedCircles = [];
 
   circles.forEach((circle) => {
-    circle.addEventListener("click", function () {
-      // If the circle has the "settled" class or is already revealed, return (prevent further clicks)
-      if (
-        circle.classList.contains("settled") ||
-        circle.classList.contains("revealed")
-      ) {
-        return;
-      }
-
-      // Add the "revealed" class to the circle
-      circle.classList.add("revealed");
-
-      // Push the revealed circle to the array
-      revealedCircles.push(circle);
-
-      // If two circles are revealed, check for a match
-      if (revealedCircles.length === 2) {
-        const [circle1, circle2] = revealedCircles;
-        playerMoves++; // Increment the player's move count
-        playerMove.textContent = playerMoves;
-
-        // Get the numbers from the revealed circles
-        const number1 = circle1.querySelector(".circle-content").textContent;
-        const number2 = circle2.querySelector(".circle-content").textContent;
-
-        // If the numbers match, add the "settled" class
-        if (number1 === number2) {
-          setTimeout(() => {
-            circle1.classList.add("settled");
-            circle2.classList.add("settled");
-            circle1.classList.remove("revealed");
-            circle2.classList.remove("revealed");
-
-            if (
-              document.querySelectorAll(".settled").length === circles.length
-            ) {
-              stopTimer();
-            }
-          }, 1000);
-        } else {
-          // If the numbers don't match, hide the circles after a delay
-          setTimeout(() => {
-            circle1.classList.remove("revealed");
-            circle2.classList.remove("revealed");
-          }, 1000);
-        }
-
-        // Clear the revealed circles array
-        revealedCircles = [];
-      }
-      // If the game is over (all pairs are settled), stop the timer
-
-      // if (document.querySelectorAll(".settled").length === circles.length) {
-      //   stopTimer();
-      // }
-    });
+    circle.addEventListener("click", () => handleCircleClick(circle, circles));
   });
 };
 
+const handleCircleClick = function (circle, circles) {
+  if (
+    circle.classList.contains("settled") ||
+    circle.classList.contains("revealed")
+  ) {
+    return;
+  }
+  circle.classList.add("revealed");
+  revealedCircles.push(circle);
+
+  // If two circles are revealed, check for a match
+  if (revealedCircles.length === 2) {
+    const [circle1, circle2] = revealedCircles;
+    playerMoves++; // Increment the player's move count
+    playerMove.textContent = playerMoves;
+
+    handlePlayerTurn();
+
+    // Get the numbers from the revealed circles
+    const number1 = circle1.querySelector(".circle-content").textContent;
+    const number2 = circle2.querySelector(".circle-content").textContent;
+
+    // If the numbers match, add the "settled" class
+    if (number1 === number2) {
+      handlePairMatch(circle1, circle2, circles);
+      updatePlayerScore();
+    } else {
+      handlePairMismatch(circle1, circle2);
+    }
+
+    // Clear the revealed circles array
+    revealedCircles = [];
+  }
+};
+
+const handlePairMatch = function (circle1, circle2, circles) {
+  setTimeout(() => {
+    circle1.classList.add("settled");
+    circle2.classList.add("settled");
+    circle1.classList.remove("revealed");
+    circle2.classList.remove("revealed");
+
+    displaySoloResults(circles);
+    displayMultiResults(circles);
+  }, 1000);
+};
+
+const handlePairMismatch = function (circle1, circle2) {
+  // If the numbers don't match, hide the circles after a delay
+  setTimeout(() => {
+    circle1.classList.remove("revealed");
+    circle2.classList.remove("revealed");
+  }, 1000);
+};
+
+const displaySoloResults = function (circles) {
+  if (document.querySelectorAll(".settled").length === circles.length) {
+    stopTimer();
+    if (selectedPlayerCount === 1) {
+      soloWinnerContainer.classList.remove("none");
+      overlay.classList.remove("none");
+      console.log(playerTime.textContent);
+      soloWinnerTime.textContent = playerTime.textContent;
+      soloWinnerMove.textContent = `${playerMove.textContent} Moves`;
+    }
+  }
+};
 // Timer variables
 let startTime = 0;
 let timerInterval = null;
@@ -276,23 +331,65 @@ const generateRandomNumbers = function (totalPairs) {
   numbers.sort(() => Math.random() - 0.5);
   return numbers;
 };
-// Call the chooseGameType function or any other function that starts the game
-// chooseGameType();
-
-// Remember to
-
-// const generateRandomNumbers = function (totalPairs) {
-//   const numbers = [];
-//   for (let i = 1; i <= totalPairs; i++) {
-//     numbers.push(i, i);
-//   }
-//   // Shuffle the numbers array to randomize the order
-//   numbers.sort(() => Math.random() - 0.5);
-//   return numbers;
-// };
 
 selectGameTypeEL.addEventListener("click", chooseGameType);
 selectMode.addEventListener("click", chooseGameTheme);
 selectPlayers.addEventListener("click", choosePlayers);
 beginGameEl.addEventListener("click", startGame);
 updateGameBoard(4, 4);
+
+// After the game is over, call this function to display the results
+const displayMultiResults = function (circles) {
+  if (document.querySelectorAll(".settled").length === circles.length) {
+    if (selectedPlayerCount > 1) {
+      multiplayerWinnerContainer.classList.remove("none");
+      overlay.classList.remove("none");
+      const multiScoreBoard = playersBoard.querySelector(
+        ".multi__score__board"
+      );
+      const allPlayerBoxes = multiScoreBoard.querySelectorAll(".players__box");
+
+      // Create an array to store player data (name and score)
+      const playerData = [];
+      // console.log(playerBoxes);
+      // Gather player data from player boxes
+      playerBoxes.forEach((playerBox) => {
+        console.log(playerBox);
+        const playerName =
+          playerBox.querySelector(".multi__players").textContent;
+        const playerScore = parseInt(
+          playerBox.querySelector(".players__scores").textContent
+        );
+        playerData.push({ name: playerName, score: playerScore });
+      });
+
+      // Sort players by score in descending order
+      playerData.sort((a, b) => b.score - a.score);
+      console.log(playerData);
+      // Update "winner__box" elements with sorted player data
+      const winnerBoxes = document.querySelectorAll(".winner__box");
+      winnerBoxes.forEach((winnerBox, index) => {
+        const winnerPlayer = winnerBox.querySelector(".winner__player");
+        const winnerMoves = winnerBox.querySelector(".winner__moves");
+
+        if (index < playerData.length) {
+          const { name, score } = playerData[index];
+          winnerPlayer.textContent = `${name} ${
+            index === 0 ? "(Winner!)" : ""
+          }`;
+          winnerMoves.textContent = `${score} Pairs`;
+          winnerBox.classList.remove("none");
+        } else {
+          winnerBox.classList.add("none");
+        }
+      });
+
+      // Display the winner container
+      multiplayerWinnerContainer.classList.remove("none");
+      overlay.classList.remove("none");
+    }
+  }
+};
+
+// Call this function after the game is over to display the results
+// displayMultiResults();

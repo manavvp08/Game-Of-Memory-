@@ -258,9 +258,15 @@ body {
   opacity: 0;
   /* transform: scale(0.5); */
   transform: rotate(90deg);
-  font-size: 5rem;
   transition: opacity 0.3s ease, transform 0.3s ease;
   /* transform: translate(-50%, -50%); */
+}
+
+.game__board__4x4 .circle-content {
+  font-size: 5rem;
+}
+.game__board__6x6 .circle-content {
+  font-size: 3rem;
 }
 .game-circle.revealed .circle-content {
   opacity: 1;
@@ -316,7 +322,8 @@ body {
   color: var(--muted-blue-grey);
   font-size: 1.8rem;
 }
-.multi__players__active {
+.player__box__active .multi__players,
+.player__box__active .players__scores {
   color: var(--very-light-grey);
 }
 
@@ -327,9 +334,9 @@ body {
   font-size: 3.2rem;
 }
 
-.players__scores__active {
+/* .players__scores__active {
   color: var(--very-light-grey);
-}
+} */
 
 .players__turn {
   color: var(--dark-navy-blue);

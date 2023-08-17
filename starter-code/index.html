@@ -20,6 +20,7 @@
     <title>Frontend Mentor | Memory game</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/utilities.css" />
+    <link rel="stylesheet" href="css/queries.css" />
     <script src="script.js" defer></script>
     <!-- <script src="app.js" defer></script> -->
   </head>
@@ -74,10 +75,15 @@
         <section class="game__board__container">
           <div class="game__board__heading">
             <img src="assets/logo.svg" alt="memory logo" />
-            <div class="decision__box">
-              <button class="restart">Restart</button>
-              <button class="new__game">New Game</button>
+            <div class="decision__container">
+              <div class="decision__box">
+                <button class="restart">Restart</button>
+                <button class="new__game">New Game</button>
+                <button class="resume__game">Resume Game</button>
+              </div>
             </div>
+
+            <button class="menu">Menu</button>
           </div>
           <div class="game__board game__board__4x4 numbers">
             <div class="game-circle">
@@ -137,7 +143,8 @@
                   <div class="players__box">
                     <div class="player__box player__box__active">
                       <p class="multi__players multi__players__active">
-                        Player 1
+                        <span class="md-player">Player 1</span>
+                        <span class="small-player">P1</span>
                       </p>
                       <span class="players__scores players__scores__active"
                         >0</span
@@ -147,26 +154,37 @@
                   </div>
                   <div class="players__box">
                     <div class="player__box">
-                      <p class="multi__players">Player 2</p>
+                      <p class="multi__players">
+                        <span class="md-player">Player 2</span>
+                        <span class="small-player">P2</span>
+                      </p>
                       <span class="players__scores">0</span>
                     </div>
                     <p class="players__turn hidden">Current Turn</p>
                   </div>
                   <div class="players__box">
                     <div class="player__box">
-                      <p class="multi__players">Player 3</p>
+                      <p class="multi__players">
+                        <span class="md-player">Player 3</span>
+                        <span class="small-player">P3</span>
+                      </p>
                       <span class="players__scores">0</span>
                     </div>
                     <p class="players__turn hidden">Current Turn</p>
                   </div>
                   <div class="players__box">
                     <div class="player__box">
-                      <p class="multi__players">Player 4</p>
+                      <p class="multi__players">
+                        <span class="md-player">Player 4</span>
+                        <span class="small-player">P4</span>
+                      </p>
                       <span class="players__scores">0</span>
                     </div>
                     <p class="players__turn hidden">Current Turn</p>
                   </div>
                 </div>
+
+                <!-- Moves total -->
                 <section class="winner__container none">
                   <section class="winner__section">
                     <h3 class="winner__text">Player 3 wins!</h3>
@@ -249,22 +267,10 @@
             </div>
           </div>
         </section>
-
-        <!-- Moves total -->
-
-        <!-- Solo game time and moves counter end -->
       </section>
+      <!-- Game board end -->
 
       <div class="overlay none"></div>
     </div>
-
-    <!-- Multiplayer scores start -->
-
-    <!-- Time -->
-    <!-- Time elapsed -->
-
-    <!-- Moves -->
-
-    <!-- Game board end -->
   </body>
 </html>

@@ -1,8 +1,3 @@
-.select__heading {
-  color: var(--muted-blue-grey);
-  font-size: 2rem;
-}
-
 .select__box {
   display: flex;
   flex-direction: column;
@@ -28,4 +23,5 @@
   height: 100%;
   background: #000;
   opacity: 0.5;
+  z-index: 1;
 }
